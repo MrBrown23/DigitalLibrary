@@ -1,0 +1,26 @@
+CREATE TABLE clients (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    username TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL
+);
+
+
+PRAGMA table_info(clients);
+
+DROP TABLE IF EXISTS clients;
+
+DELETE FROM clients;
+
+
+create insert-book.js to insert a new book into the database
+
+CREATE TABLE books (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    book_name TEXT NOT NULL,
+    author TEXT NOT NULL,
+    genre TEXT NOT NULL,
+    num_available INTEGER NOT NULL
+);
