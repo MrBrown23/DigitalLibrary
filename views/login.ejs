@@ -39,6 +39,28 @@
   </form>
 
   <p class="mt-5 mb-3">New to our website?<a href="signup">  Sign up</a></p>
+
+  <button id="errorModalBtn" type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#errorModal">
+    Launch error modal
+  </button>
+  
+  <!-- Error Modal -->
+  <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="errorModalLabel">Error</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-warning" role="alert">
+            <p id="errorMessage"><%= errorMessage %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer class="text-center mt-auto text-black-50" style="padding-top: 5%;">
       <a
        class="btn btn-link btn-floating btn-lg text-dark m-1"
@@ -72,6 +94,16 @@
   </footer>
 </main>
   </body>
+    <script>
+      const errorMessage = '<%= errorMessage %>'; // Use the errorMessage variable passed from the server-side code
+
+      document.addEventListener('DOMContentLoaded', () => {
+          if (errorMessage && errorMessage.trim() !== '') {
+              const errorModalBtn = document.getElementById('errorModalBtn');
+              errorModalBtn.click();
+          }
+      });
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"></script>
   <script src="js/login-form.js"></script>
