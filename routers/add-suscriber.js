@@ -4,27 +4,11 @@ const router = express.Router();
 const crypto = require('crypto');
 
 const signupRouter = (db) => {
-    router.get('/', (req, res) => {
-        console.log("We are in signup.js");
-        console.log(req.session.loggedIn);
-        console.log(req.session.user);
-        if (req.session && req.session.loggedIn) {
-            if (req.session.user && req.session.user.username === 'admin') {
-                res.render(path.join(__dirname, '../views/admin'), { user: req.session.user });
-            } else {
-                res.render(path.join(__dirname, '../views/library'), { user: req.session.user });
-            }
-        }
-        else{
-            var errorMessage = '';
-            res.render(path.join(__dirname, '../views/signup'),{ errorMessage });}
-    });
-
     router.post('/', (req, res) => {
         const { f_name, l_name, username, email, password, passwordV } = req.body;
 
         if (password !== passwordV) {
-            return res.render(path.join(__dirname, '../views/signup'), { errorMessage: "Passwords don't match" }); 
+            return res.render(path.join(__dirname, '../views/suscribers'), { errorMessage: "Passwords don't match" }); 
            
         }
 
@@ -35,7 +19,7 @@ const signupRouter = (db) => {
             }
 
             if (row.usernameCount > 0) {
-                return res.render(path.join(__dirname, '../views/signup'), { errorMessage: 'Username already exists' });            
+                return res.render(path.join(__dirname, '../views/suscribers'), { errorMessage: 'Username already exists' });            
             } else {
                 db.get('SELECT COUNT(*) AS emailCount FROM clients WHERE email = ?', [email], (err, row) => {
                     if (err) {
@@ -43,7 +27,7 @@ const signupRouter = (db) => {
                     }
 
                     if (row.emailCount > 0) {
-                        return res.render(path.join(__dirname, '../views/signup'), { errorMessage: 'Email already exists' });
+                        return res.render(path.join(__dirname, '../views/suscribers'), { errorMessage: 'Email already exists' });
                     } else {
                         const query = `INSERT INTO clients (first_name, last_name, username, email, password) VALUES (?, ?, ?, ?, ?)`;
                         const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
@@ -52,7 +36,7 @@ const signupRouter = (db) => {
                                 return res.status(500).send(err.message);
                             }
 
-                            res.render(path.join(__dirname, '../views/login'));
+                            res.render(path.join(__dirname, '../views/suscribers'));
                         });
                     }
                 });
