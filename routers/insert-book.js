@@ -6,7 +6,7 @@ const sqlite3 = require('sqlite3').verbose();
 
 const insertBookRouter = (db) => {
     router.get('/', (req, res) => {
-        console.log('I am in get')
+        console.log('I am in get (insert-book.js)')
     
         db.all('SELECT * FROM books', (err, rows) => {
             if (err) {
@@ -19,7 +19,7 @@ const insertBookRouter = (db) => {
     });
 
     router.post('/', (req, res) => {
-        console.log('I am in Post')
+        console.log('I am in post (insert-book.js)')
                 const { bookName, authorName, genre, numAvailable } = req.body;
         
                 const query = 'INSERT INTO books (book_name, author, genre, num_available) VALUES (?, ?, ?, ?)';
