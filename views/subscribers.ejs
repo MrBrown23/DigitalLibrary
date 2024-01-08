@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Library</title>
+    <title>Subscribers</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -60,7 +60,7 @@
     <div class="container mt-4">
       <h2>Add Subscriber</h2>
       <!-- Book insertion form -->
-      <form method="post" action="/signup">
+      <form method="post" action="/subscribers">
           <div class="form-group">
               <label for="title">First Name:</label>
               <input type="text" class="form-control" id="title" name="f_name" placeholder="Enter First Name" required>
@@ -104,13 +104,11 @@
                                 <div class="card-body">
                                     <h5 class="card-title"><%= client.first_name %> <%= client.last_name %></h5>
                                     <p class="card-text">Email: <%= client.email %></p>
-                                    <!-- Add other client details here -->
-                                    <!-- Make sure to modify the client-related properties accordingly -->
                                     <div class="d-flex justify-content-between">
-                                        <form method="POST" action="/delete-client/<%= client.id %>">
+                                        <form method="POST" action="/delete-subscriber/<%= client.id %>" onsubmit="return confirm('Are you sure you want to delete this clinet?');">
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
-                                        <form method="POST" action="/edit-client/<%= client.id %>">
+                                        <form method="POST" action="/edit-subscriber/<%= client.id %>"  onsubmit="return confirm('Are you sure you want to Edit this book?');">
                                             <button type="submit" class="btn btn-warning">Edit</button>
                                         </form>
                                     </div>
@@ -180,6 +178,20 @@
       </footer>
 
     <!-- Bootstrap JS -->
+    <script>
+      const errorMessage = '<%= errorMessage %>'; // Use the errorMessage variable passed from the server-side code
+  
+      document.addEventListener('DOMContentLoaded', () => {
+          if (errorMessage && errorMessage.trim() !== '') {
+              const errorModalBtn = document.getElementById('errorModalBtn');
+              errorModalBtn.click();
+          }
+      });
+
+      if (window.location.href !== 'http://localhost:3000/subscribers') {
+            window.location.href = 'http://localhost:3000/subscribers';
+        }
+  </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"></script>
 </body>
